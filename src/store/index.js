@@ -1,12 +1,27 @@
 import {createStore} from "vuex";
 import axiosClient from "../axios.js";
 
+const tmpSurveys =[
+  {
+    id: 1,
+    type: "select",
+    question: "From which country are you?",
+    description: null,
+    data: {
+      options:[
+        {uuid : "9973b372-e8ab-4da6-b500-22ad86daf3b1", text: "USA"}
+      ]
+    }
+  }
+];
+
 const store = createStore({
   state: {
     user: {
       data: {},
       token: sessionStorage.getItem("TOKEN"),
-    }
+    },
+    surveys: [...tmpSurveys],
   },
   getters: {},
   actions: {
