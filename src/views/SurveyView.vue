@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 
 import PageComponent from "../components/PageComponent.vue";
+import QuestionEditor from "../components/editor/QuestionEditor.vue";
 
 const route = useRoute();
 
@@ -203,7 +204,7 @@ if (route.params.id) {
           <div v-if="!model.questions.length" class="text-center text-gray-600">
             You don't have any questions created
           </div>
-          <div v-for="(questions, index) in model.questions" :key="questions.id">
+          <div v-for="(question, index) in model.questions" :key="question.id">
             <QuestionEditor
               :question="question"
               :index="index"
