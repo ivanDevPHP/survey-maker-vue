@@ -2,11 +2,12 @@
 import { v4 as uuidv4 } from "uuid";
 import store from "../store/index.js";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import PageComponent from "../components/PageComponent.vue";
 import QuestionEditor from "../components/editor/QuestionEditor.vue";
 
+const router = useRouter();
 const route = useRoute();
 
 let model = ref({
@@ -48,6 +49,15 @@ function questionChange(question){
       return JSON.parse(JSON.stringify(question));
     }
     return q;
+  });
+}
+
+function saveSurvey(){
+  store.dispatch("saveSurvey", model.value).then(({ data }) => {
+    router.push({
+      name: "SurveyView",
+      params: { id: data.data.id },
+    });
   });
 }
 
