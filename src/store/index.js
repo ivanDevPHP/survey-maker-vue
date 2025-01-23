@@ -2,33 +2,6 @@ import {createStore} from "vuex";
 import axiosClient from "../axios.js";
 import {validate} from "uuid";
 
-const tmpSurveys =[
-  {
-    id: 100,
-    title: "The Title Content",
-    slug: "the-title-content",
-    status: "draft",
-    image: "https://pbs.twimg.com/profile_images/1118059535003017221/9ZwEYqj2_400x400.png",
-    description: "Test TEST Test",
-    updated_at: "2025-01-10 12:00:00",
-    created_at: "2025-01-10 10:00:00",
-    expire_date: "2025-01-18 10:00:00",
-    questions: [
-      {
-        id: 1,
-        type: "select",
-        question: "From which country are you?",
-        description: null,
-        data: {
-          options:[
-            {uuid : "9973b372-e8ab-4da6-b500-22ad86daf3b1", text: "USA"}
-          ]
-        }
-      }
-    ]
-  }
-];
-
 const store = createStore({
   state: {
     user: {
@@ -39,7 +12,10 @@ const store = createStore({
       loading: false,
       data: {}
     },
-    surveys: [...tmpSurveys],
+    surveys: {
+      loading: false,
+      data: []
+    },
     questionTypes: ["text", "select", "radio", "checkbox", "textarea",]
   },
   getters: {},
@@ -80,6 +56,14 @@ const store = createStore({
     deleteSurvey({}, id){
       return axiosClient.delete(`/survey/${id}`)
     },
+    getSurveys({commit}, id){
+      commit('setSurveysLoading', true);
+      return axiosClient.get("/survey").then((res) =>{
+        commit('setSurveysLoading', false)
+        commit("setSurveys", res.data);
+        return res;
+      })
+    },
     register({ commit }, user) {
       return axiosClient.post('/register', user)
         .then(({data}) => {
@@ -108,6 +92,12 @@ const store = createStore({
     },
     setCurrentSurvey: (state, survey) => {
       state.currentSurvey.data = survey.data;
+    },
+    setSurveysLoading: (state, loading) => {
+      state.surveys.loading = loading;
+    },
+    setSurveys: (state, surveys) => {
+      state.surveys.data = surveys.data;
     },
     logout: (state) => {
       state.user.data = {};
