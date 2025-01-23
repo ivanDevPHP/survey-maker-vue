@@ -1,5 +1,6 @@
 import {createStore} from "vuex";
 import axiosClient from "../axios.js";
+import {validate} from "uuid";
 
 const tmpSurveys =[
   {
@@ -75,6 +76,9 @@ const store = createStore({
       }
 
       return response;
+    },
+    deleteSurvey({}, id){
+      return axiosClient.delete(`/survey/${id}`)
     },
     register({ commit }, user) {
       return axiosClient.post('/register', user)
