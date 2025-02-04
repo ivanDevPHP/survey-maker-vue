@@ -2,6 +2,7 @@
 import store from "../store/index.js";
 import {computed} from "vue";
 import PageComponent from "../components/PageComponent.vue";
+import SurveyListItem from "../components/SurveyListItem.vue";
 
 const surveys = computed(() => store.state.surveys.data);
 
