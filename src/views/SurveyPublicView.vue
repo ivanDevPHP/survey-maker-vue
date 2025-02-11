@@ -1,10 +1,10 @@
 <script setup>
 import {computed, ref} from "vue";
-import {useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import {useStore} from "vuex";
 import QuestionViewer from "../components/QuestionViewer.vue";
 
-const route = useRouter();
+const route = useRoute();
 const store = useStore();
 
 const loading = computed(() => store.state.currentSurvey.loading);
@@ -14,10 +14,24 @@ const surveyFinished = ref(false);
 
 const answers = ref({});
 
+console.log(route.params);
 store.dispatch("getSurveyBySlug", route.params.slug);
 
 function submitSurvey(){
-  console.log(JSON.stringify())
+  store.dispatch("saveSurveyAnswer", {
+    surveyId: survey.value.id,
+    answers: answers.value,
+  })
+    .then((response) => {
+      if(response.status === 201){
+        surveyFinished.value = true;
+      }
+    });
+}
+
+function submitAnotherResponse(){
+  answers.value = {};
+  surveyFinished.value = false;
 }
 </script>
 
@@ -68,7 +82,7 @@ function submitSurvey(){
       </div>
       <div>
         <hr class="my-3"/>
-        <div v-for="(question, index) of survey.questions" :key="questions.id">
+        <div v-for="(question, index) of survey.questions" :key="question.id">
           <QuestionViewer
             v-model="answers[question.id]"
             :question="question"
