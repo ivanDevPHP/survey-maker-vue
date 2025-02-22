@@ -37,7 +37,7 @@ store.dispatch("getDashboardData");
         </div>
         <div class="flex justify-between text-sm mb-3">
           <div>Answers:</div>
-          <div>{{ data.totalAnswers }}</div>
+          <div>{{ data.latestSurvey.answers }}</div>
         </div>
         <div class="flex justify-between">
           <router-link
