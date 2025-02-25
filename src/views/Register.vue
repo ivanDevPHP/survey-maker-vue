@@ -6,6 +6,13 @@
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="space-y-6" @submit="register">
+      <Alert v-if="Object.keys(errors).length" class="flex-col items-stretch text-sm">
+        <div v-for="(field, id) of Object.keys(errors)" :key="i">
+          <div v-for="(error, ind) of errors[field] || []" :key="ind">
+            * {{ error }}
+          </div>
+        </div>
+      </Alert>
       <div>
         <label for="fullname" class="block text-sm/6 font-medium text-gray-900">Full Name</label>
         <div class="mt-2">
@@ -37,7 +44,18 @@
       </div>
 
       <div>
-        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+        <button
+          :disabled="loading"
+          type="submit"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white
+          shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+          focus-visible:outline-indigo-600"
+          :class="{'cursor-not-allowed': loading, 'hover:bg-indigo-500': loading}">
+          <svg v-if="loading" class="size-5 text -blue-500 animate-spin mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 1-6.32 17.66" />
+          </svg>
+          Sign Up
+        </button>
       </div>
     </form>
 
@@ -51,6 +69,8 @@
 <script setup>
   import store from "../store/index.js";
   import {useRouter} from "vue-router";
+  import {ref} from "vue";
+  import Alert from "../components/Alert.vue"
 
   const router = useRouter();
   const user ={
@@ -60,14 +80,25 @@
     password_confirmation: ''
   };
 
+  let loading = ref(false);
+  const errors = ref({});
+
   function register(ev){
     ev.preventDefault();
+    loading.value = true;
     store
       .dispatch('register', user)
       .then((res) => {
+        loading.value = false;
         router.push({
           name: 'Dashboard'
         })
+      })
+      .catch(err => {
+        loading.value = false;
+        if (err.response.status === 422) {
+          errors.value = err.response.data.errors
+        }
       })
   }
 </script>
