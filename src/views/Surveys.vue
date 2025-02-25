@@ -7,8 +7,9 @@ import SurveyListItem from "../components/SurveyListItem.vue";
 const surveys = computed(() => store.state.surveys);
 
 store.dispatch('getSurveys');
-function deleteSurvey(survey){
-  if(confirm(`Are you sure you want to delete this survey? Operation can't be undone!!`)){
+
+function deleteSurvey(survey) {
+  if (confirm(`Are you sure you want to delete this survey? Operation can't be undone!!`)) {
     store.dispatch('deleteSurvey', survey.id)
       .then(() => {
         store.dispatch('getSurveys')
@@ -16,13 +17,13 @@ function deleteSurvey(survey){
   }
 }
 
-function getForPage(ev,link){
+function getForPage(ev, link) {
   ev.preventDefault();
-  if (!link.url || link.active){
+  if (!link.url || link.active) {
     return;
   }
 
-  store.dispatch("getSurveys", { url: link.url });
+  store.dispatch("getSurveys", {url: link.url});
 }
 </script>
 
@@ -42,8 +43,9 @@ function getForPage(ev,link){
           hover:bg-emerald-600
         "
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 -mt-1 inline-block" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 -mt-1 inline-block" fill="none" viewBox="0 0 24 24"
+               stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
           </svg>
           Add New Survey
         </router-link>
@@ -51,7 +53,7 @@ function getForPage(ev,link){
     </template>
     <div v-if="surveys.loading" class="flex justify-center">Loading...</div>
     <div v-else>
-      <div  class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         <SurveyListItem
           v-for="(survey, index) in surveys.data"
           :key="survey.id"

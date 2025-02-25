@@ -1,8 +1,8 @@
 <script setup>
-import { v4 as uuidv4 } from "uuid";
+import {v4 as uuidv4} from "uuid";
 import store from "../store/index.js";
-import { ref, watch, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import {ref, watch, computed} from "vue";
+import {useRoute, useRouter} from "vue-router";
 
 import PageComponent from "../components/PageComponent.vue";
 import QuestionEditor from "../components/editor/QuestionEditor.vue";
@@ -35,7 +35,7 @@ if (route.params.id) {
   store.dispatch('getSurvey', route.params.id);
 }
 
-function onImageChoose(ev){
+function onImageChoose(ev) {
   const file = ev.target.files[0];
 
   const reader = new FileReader();
@@ -47,7 +47,7 @@ function onImageChoose(ev){
   reader.readAsDataURL(file);
 }
 
-function addQuestion(index){
+function addQuestion(index) {
   const newQuestion = {
     id: uuidv4(),
     type: "text",
@@ -59,40 +59,40 @@ function addQuestion(index){
   model.value.questions.splice(index, 0, newQuestion);
 }
 
-function deleteQuestion(question){
+function deleteQuestion(question) {
   model.value.questions = model.value.questions.filter(
     (q) => q !== question
   );
 }
 
-function questionChange(question){
-  model.value.questions = model.value.questions.map((q) =>{
-    if(q.id === question.id){
+function questionChange(question) {
+  model.value.questions = model.value.questions.map((q) => {
+    if (q.id === question.id) {
       return JSON.parse(JSON.stringify(question));
     }
     return q;
   });
 }
 
-function saveSurvey(){
-  store.dispatch("saveSurvey", model.value).then(({ data }) => {
+function saveSurvey() {
+  store.dispatch("saveSurvey", model.value).then(({data}) => {
     store.commit('notify', {
       type: 'success',
       message: 'Survey was successfully updated'
     })
     router.push({
       name: "SurveyView",
-      params: { id: data.data.id },
+      params: {id: data.data.id},
     });
   });
 }
 
-function deleteSurvey(){
-  if(
+function deleteSurvey() {
+  if (
     confirm(
       `Are you sure you want to delete this survey?`
     )
-  ){
+  ) {
     store.dispatch("deleteSurvey", model.value.id).then(() => {
       router.push({
         name: "Surveys",
@@ -118,7 +118,9 @@ function deleteSurvey(){
           class="py-2 px-3 text-white bg-red-500 rounded-md hover:bg-red-600 flex items-center"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 mr-2">
-            <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
+            <path fill-rule="evenodd"
+                  d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                  clip-rule="evenodd"/>
           </svg>
           Delete Survey
         </button>
@@ -153,8 +155,10 @@ function deleteSurvey(){
                   overflow-hidden
                   bg-gray-100
               ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-[80%] w-[80%] text-gray-300">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="h-[80%] w-[80%] text-gray-300">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
                 </svg>
               </span>
               <button
@@ -284,8 +288,9 @@ function deleteSurvey(){
                 bg-gray-600
                 hover:bg-gray-700
               ">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                   stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
               </svg>
 
               Add Question

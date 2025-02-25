@@ -17,19 +17,19 @@ const answers = ref({});
 console.log(route.params);
 store.dispatch("getSurveyBySlug", route.params.slug);
 
-function submitSurvey(){
+function submitSurvey() {
   store.dispatch("saveSurveyAnswer", {
     surveyId: survey.value.id,
     answers: answers.value,
   })
     .then((response) => {
-      if(response.status === 201){
+      if (response.status === 201) {
         surveyFinished.value = true;
       }
     });
 }
 
-function submitAnotherResponse(){
+function submitAnotherResponse() {
   answers.value = {};
   surveyFinished.value = false;
 }
@@ -41,11 +41,11 @@ function submitAnotherResponse(){
     <form @submit.prevent="submitSurvey" v-else class="container mx-auto">
       <div class="grid grid-cols-6 items-center">
         <div class="mr-4">
-          <img :src="survey.image_url" alt="" />
+          <img :src="survey.image_url" alt=""/>
         </div>
         <div class="col-span-5">
           <h1 class="text-3x1 mb-3">{{ survey.title }}</h1>
-           <p class="text-gray-500 text-sm" v-html="survey.description"></p>
+          <p class="text-gray-500 text-sm" v-html="survey.description"></p>
         </div>
       </div>
       <div

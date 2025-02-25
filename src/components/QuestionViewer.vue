@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from "vue";
-const { question, index, modelValue } = defineProps({
+import {ref} from "vue";
+
+const {question, index, modelValue} = defineProps({
   question: Object,
   index: Number,
   modelValue: [String, Array],
@@ -8,14 +9,14 @@ const { question, index, modelValue } = defineProps({
 const emits = defineEmits(["update:modelValue"]);
 
 let model;
-if (question.type === "checkbox"){
+if (question.type === "checkbox") {
   model = ref({});
 }
 
 function onCheckboxChange($event) {
   const selectedOptions = [];
-  for (let text in model.value){
-    if (model.value[text]){
+  for (let text in model.value) {
+    if (model.value[text]) {
       selectedOptions.push(text);
     }
   }
@@ -41,10 +42,10 @@ function onCheckboxChange($event) {
           class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white
           rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm">
-            <option value="">Please Select</option>
-            <option v-for="option in question.data.options" :key="option.uuid" :value="option.text">
-              {{ option.text }}
-            </option>
+          <option value="">Please Select</option>
+          <option v-for="option in question.data.options" :key="option.uuid" :value="option.text">
+            {{ option.text }}
+          </option>
         </select>
       </div>
       <div v-else-if="question.type === 'radio'">
