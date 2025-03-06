@@ -56,7 +56,12 @@ function addQuestion(index) {
     data: {}
   };
 
-  model.value.questions.splice(index, 0, newQuestion);
+  // If index is not provided or is invalid, push to the end of the array
+  if (typeof index === 'undefined' || index < 0 || index > model.value.questions.length) {
+    model.value.questions.push(newQuestion);
+  } else {
+    model.value.questions.splice(index, 0, newQuestion);
+  }
 }
 
 function deleteQuestion(question) {
