@@ -37,7 +37,12 @@ function submitAnotherResponse() {
 
 <template>
   <div class="py-5 px-8">
-    <div v-if="loading" class="flex justify-center">Loading...</div>
+    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white/75">
+      <svg class="size-12 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 1-6.32 17.66"/>
+      </svg>
+    </div>
     <form @submit.prevent="submitSurvey" v-else class="container mx-auto">
       <div class="grid grid-cols-6 items-center">
         <div class="mr-4">

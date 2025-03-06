@@ -13,8 +13,13 @@ store.dispatch("getDashboardData");
 
 <template>
   <PageComponent title="Dashboard">
-    <div v-if="loading" class="flex justify-center">Loading...</div>
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700">
+    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white/75">
+      <svg class="size-12 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 1-6.32 17.66"/>
+      </svg>
+    </div>
+    <div v-else-if="data.latestSurvey" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700">
       <div class="bg-white shadow-md p-3 text-center flex flex-col animate-fade-in-down order-1 lg:order-2"
            style="animation-delay: 0.1s">
         <h3 class="text-2xl font-semibold"> Total Surveys</h3>
