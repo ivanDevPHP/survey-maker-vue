@@ -2,6 +2,7 @@
 import PageComponent from "../components/PageComponent.vue";
 import {computed} from "vue";
 import {useStore} from "vuex";
+import NoSurvey from "../components/NoSurvey.vue"
 
 const store = useStore();
 
@@ -19,7 +20,8 @@ store.dispatch("getDashboardData");
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 1-6.32 17.66"/>
       </svg>
     </div>
-    <div v-else-if="data.latestSurvey" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700">
+
+    <div v-else-if="data.totalSurveys  > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700">
       <div class="bg-white shadow-md p-3 text-center flex flex-col animate-fade-in-down order-1 lg:order-2"
            style="animation-delay: 0.1s">
         <h3 class="text-2xl font-semibold"> Total Surveys</h3>
@@ -99,6 +101,7 @@ store.dispatch("getDashboardData");
         </a>
       </div>
     </div>
+    <NoSurvey v-else></NoSurvey>
   </PageComponent>
 </template>
 

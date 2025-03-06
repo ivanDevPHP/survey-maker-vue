@@ -3,6 +3,7 @@ import store from "../store/index.js";
 import {computed} from "vue";
 import PageComponent from "../components/PageComponent.vue";
 import SurveyListItem from "../components/SurveyListItem.vue";
+import NoSurvey from "../components/NoSurvey.vue"
 
 const surveys = computed(() => store.state.surveys);
 
@@ -57,7 +58,7 @@ function getForPage(ev, link) {
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 1-6.32 17.66"/>
       </svg>
     </div>
-    <div v-else>
+    <div v-else-if="surveys.data > 0">
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         <SurveyListItem
           v-for="(survey, index) in surveys.data"
@@ -93,6 +94,7 @@ function getForPage(ev, link) {
       </div>
 
     </div>
+    <NoSurvey v-else></NoSurvey>
   </PageComponent>
 </template>
 
