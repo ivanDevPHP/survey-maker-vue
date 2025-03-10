@@ -58,7 +58,7 @@ function getForPage(ev, link) {
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1 1-6.32 17.66"/>
       </svg>
     </div>
-    <div v-else-if="surveys.data > 0">
+    <div v-else-if="surveys.data.length > 0">
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         <SurveyListItem
           v-for="(survey, index) in surveys.data"
