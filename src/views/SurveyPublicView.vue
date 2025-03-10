@@ -85,7 +85,7 @@ function submitAnotherResponse() {
         </button>
 
       </div>
-      <div>
+      <div v-else>
         <hr class="my-3"/>
         <div v-for="(question, index) of survey.questions" :key="question.id">
           <QuestionViewer
