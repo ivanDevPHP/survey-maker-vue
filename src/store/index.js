@@ -21,6 +21,11 @@ const store = createStore({
       links: [],
       data: []
     },
+    logs: {
+      loading: false,
+      links: [],
+      data: []
+    },
     questionTypes: ["text", "select", "radio", "checkbox", "textarea",],
     notification: {
       show: false,
@@ -104,6 +109,15 @@ const store = createStore({
     saveSurveyAnswer({commit}, {surveyId, answers}) {
       return axiosClient.post(`/survey/${surveyId}/answer`, {answers});
     },
+    getLogs({commit}, {url = null} = {}) {
+      url = url || '/logs'
+      commit('setLogsLoading', true);
+      return axiosClient.get(url).then((res) => {
+        commit('setLogsLoading', false)
+        commit("setLogs", res.data);
+        return res;
+      })
+    },
     register({commit}, user) {
       return axiosClient.post('/register', user)
         .then(({data}) => {
@@ -145,6 +159,14 @@ const store = createStore({
     setSurveys: (state, surveys) => {
       state.surveys.links = surveys.meta.links;
       state.surveys.data = surveys.data;
+    },
+    setLogsLoading: (state, loading) => {
+      state.logs.loading = loading;
+    },
+    setLogs: (state, logs) => {
+      state.logs.links = logs.links;
+      state.logs.data = logs.data;
+
     },
     logout: (state) => {
       state.user.data = {};

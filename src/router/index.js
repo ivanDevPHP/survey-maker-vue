@@ -9,7 +9,7 @@ import NotFound from "../views/NotFound.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
 import AuthLayout from "../components/AuthLayout.vue";
 import store from "../store/index.js";
-
+import Logs from "../views/Logs.vue";
 
 const routes = [
   {
@@ -23,6 +23,7 @@ const routes = [
       {path: '/surveys', name: 'Surveys', component: Surveys},
       {path: '/surveys/create', name: 'SurveyCreate', component: SurveyView},
       {path: '/surveys/:id', name: 'SurveyView', component: SurveyView},
+      {path: '/logs', name: 'Logs', component: Logs},
     ]
   },
   {
