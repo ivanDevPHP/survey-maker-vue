@@ -61,10 +61,10 @@ store.dispatch("getDashboardData");
             Edit Survey
           </router-link>
 
-          <button
+          <router-link
+            :to="{ name: 'SurveyViewAnswers', params: {id: data.latestSurvey.id }}"
             class="flex py-2 px-4 border border-transparent text-sm rounded-md text-indigo-500 hover:bg-indigo-700 hover:text-white transition-colors
-                  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
+                  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -73,7 +73,7 @@ store.dispatch("getDashboardData");
             </svg>
 
             View Answers
-          </button>
+          </router-link>
         </div>
       </div>
       <div class="bg-white shadow-md p-3 row-span-2 order-4 lg:order-3 animate-fade-in-down"
